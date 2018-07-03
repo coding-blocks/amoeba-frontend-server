@@ -8,4 +8,5 @@ ln -s ~/codingblocks.online.projectx/dist ./
 
 - `yarn install`
 - `yarn run start`
+- Go to `localhost:8080` in your browser, make sure you have disabled javascript.
 
