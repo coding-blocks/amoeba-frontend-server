@@ -1,13 +1,19 @@
 const Handlebars = require("handlebars");
 const path = require('path')
 const fs = require('fs-extra')
+const { registerHelpers } = require('../utils/helpers');
+
+registerHelpers(Handlebars)
 
 // precompile templates
 
 const viewsDir = path.join(__dirname, '../views')
 const templates = fs.readdirSync(viewsDir)
 
-const CompiledTemplates = templates.map(filename => {
+const CompiledTemplates = templates
+  .filter(filename => !(fs.statSync(path.join(viewsDir + '/' + filename)).isDirectory()))
+  .map(filename => {
+
   const templateSource = fs.readFileSync(path.join(viewsDir, filename), 'utf-8')
   return {
     name: filename.split('.')[0],
