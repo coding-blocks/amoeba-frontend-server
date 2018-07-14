@@ -1,3 +1,179 @@
-Welcome to Coding blocks. It looks like there is a no javascript here
+<ul class="nav-list">
+    <li class="nav-items pointer">
+        <a href="/" class="active">Home</a>
+    </li>
+    <li class="nav-items pointer">
+        <a href="/courses">All Courses</a>
+    </li>
+</ul>
 
-- {{name}}
+<div class="home-vh">
+    <div class="home-container">
+        <h1 class="home-heading">Coding Blocks Online</h1>
+        <h2>Learn to code interactively</h2>
+    </div>
+</div>
+
+<div class="grid row">
+    <div class="row o-offerings d-flex justify-content-center">
+        {{#each announcements}}
+            <section class="offering-card">
+                <div>
+                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                        <div class="left order-2 order-md-1">
+                            <h1>
+                                {{attributes.title}}
+                            </h1>
+                            <h2>
+                                {{attributes.subtitle}}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {{/each}}
+    </div>
+</div>
+
+<div class="heading">
+    <p>All Courses</p>
+</div>
+<div class="grid row">
+    <div class="row o-offerings d-flex justify-content-center">
+        {{#each courses as |course|}}
+            <section class="offering-card">
+                <div>
+                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                        <div class="left order-2 order-md-1">
+                            <h1>
+                                {{title}}
+                            </h1>
+                            <h2>
+                                {{subtitle}}
+                            </h2>
+                            {{#if slug}}
+                                <a href="courses/{{slug}}">Link</a>
+                            {{else}}
+                                <a href="courses/{{id}}">Link</a>
+                            {{/if}}
+                            <p class="card-text card-body">
+                                {{summary}}
+                            </p>
+                            <h3 class="card-text card-body">Instructors :</h3>
+                            {{#each instructors as |instructor|}}
+                                <h2>{{instructor.name}}</h2>
+                                <p class="card-text card-body">
+                                    {{{mdToHtml instructor.description}}}
+                                </p>
+                            {{/each}}
+                            {{#each runs as |run|}}
+                                {{#ifCond start '>' ../../epoch}}
+                                    <div>Name: {{run.name}}</div>
+                                    <div>Batch Start: {{formatEpochDate run.start}}</div>
+                                    <div>Batch End: {{formatEpochDate run.end}}</div>
+                                    <div>Price: Rs {{run.price}}</div>
+                                {{/ifCond}}
+                            {{/each}}
+                            <br>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        {{/each}}
+    </div>
+</div>
+
+
+<div class="row o-offerings">
+    <div class="row flex-row w-100 justify-content-center">
+        <div class="heading">
+            What we offer
+        </div>
+    </div>
+    <div class="row flex-column flex-md-row justify-content-between cards-box">
+
+        <div class="offering-card">
+            <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                <div class="left order-2 order-md-1">
+                    <h1 class="offering-card-heading">
+                        Comprehensive learning
+                    </h1>
+                    <h2 class="card-text card-body">
+                        Experienced, engaging instructors take you through course material, step by step, in our high-quality video lessons.
+                        This will help you to keep your skills sharp even after completing the course.
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="offering-card">
+            <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                <div class="left order-2 order-md-1">
+                    <h1 class="offering-card-heading">
+                        24*7 Mentor Support
+                    </h1>
+                    <h2 class="card-text card-body">
+                        Our programming courses online are a flexible alternative that provides online access to our in-depth curriculum—complete
+                        with real-time support from instructors, our industry-tested learning platform, hands-on assignments and much more.
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="offering-card">
+            <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                <div class="left order-2 order-md-1">
+                    <h1 class="offering-card-heading">
+                        Live Webinars for Doubt Clearing
+                    </h1>
+                    <h2 class="card-text card-body">
+                        Get exclusive access to Live Webinars where you can interact with mentors for important course topics. Every course batch has multiple live webinars
+                        which is attended by 100s of students all over the world.
+                    </h2>
+                </div>
+
+            </div>
+        </div>
+        <div class="offering-card">
+            <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                <div class="left order-2 order-md-1">
+                    <h1 class="offering-card-heading">
+                        Practice Assignments on HackerBlocks
+                    </h1>
+                    <h2 class="card-text card-body">
+                        Code directly in the browser with our course challenges, bringing to life what you learned and receiving immediate,
+                        helpful feedback and code validation.
+                    </h2>
+                </div>
+
+            </div>
+        </div>
+        <div class="offering-card">
+            <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                <div class="left order-2 order-md-1">
+                    <h1 class="offering-card-heading">
+                        Revisit and Revise
+                    </h1>
+                    <h2 class="card-text card-body">
+                        Study the course contents at your own pace. If you're an experienced developer then you can complete the courses in a matter of days.
+                        If you want to take things slowly you get access to courses for a minimum period of 6 months. You also get an option to purchase an extended availability of the course.
+                    </h2>
+                </div>
+
+            </div>
+        </div>
+        <div class="offering-card">
+            <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                <div class="left order-2 order-md-1">
+                    <h1 class="offering-card-heading">
+                        Evaluation and Certification
+                    </h1>
+                    <h2 class="card-text card-body">
+                        You will be assessed weekly in your path of becoming a Coding Blocks at this certification online course and all the practice,
+                        assignments and tests will be done on our online automated code judge. After course completion get instructor-signed certificate with our
+                        logo to verify your achievement and increase your job prospects.
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
