@@ -17,34 +17,25 @@ app.use(morgan('dev'))
 app.get('/', async (req, res, next) => {
 
   let dataFetch = {}
-  //TODO: should the url be static?
-  await getAPIdata(config.API.RECOMMENDED_COURSE)
-    .then((courses) => {
-      dataFetch.courses = deserializer(courses)
-    }).catch((e) => {
-      console.log(e);
-      next();
+  let getCourses = getAPIdata(config.API.RECOMMENDED_COURSE);
+  let getAnnouncements = getAPIdata(config.API.ANNOUNCEMENTS);
+
+  Promise.all([getCourses, getAnnouncements]).then(async (values) => {
+    dataFetch.courses = deserializer(values[0])
+    dataFetch.announcements = values[1].data;
+
+    const html = await cookHTML('index', {
+      baseUrlApi: config.API.BASE_URL,
+      courses: dataFetch.courses,
+      announcements: dataFetch.announcements,
+      epoch: Math.round((new Date()).getTime() / 1000)
     })
 
-  await getAPIdata(config.API.ANNOUNCEMENTS)
-    .then((list) => {
-      dataFetch.announcements = list.data;
-    }).catch((e) => {
-      console.log(e);
-      next();
-    })
-
-  //res.json(dataFetch.courses)
-
-  const html = await cookHTML('index', {
-    baseUrlApi: config.API.BASE_URL,
-    courses: dataFetch.courses,
-    announcements: dataFetch.announcements,
-    epoch: Math.round((new Date()).getTime() / 1000)
+    res.send(html)
+  }).catch((e) => {
+    console.error(e);
+    next();
   })
-
-  // res.json(dataFetch.courses)
-  res.send(html)
 })
 
 app.use('/courses', courseRouter)
