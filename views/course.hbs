@@ -1,18 +1,19 @@
 <div class="home-vh">
+    <ul class="nav-list">
+        <li class="nav-items pointer">
+            <a href="/">Home</a>
+        </li>
+        <li class="nav-items pointer">
+            <a href="/courses">All Courses</a>
+        </li>
+    </ul>
     <div class="home-container">
         <h1 class="home-heading">Coding Blocks Online</h1>
         <h2>Learn to code interactively</h2>
     </div>
 </div>
-
-<ul class="nav-list">
-    <li class="nav-items pointer">
-        <a href="/">Home</a>
-    </li>
-    <li class="nav-items pointer">
-        <a href="/courses">All Courses</a>
-    </li>
-</ul>
+<ul>
+    <li>
 {{#with course}}
     <h1>{{title}}</h1>
     <h2>{{subtitle}}</h2>
@@ -62,7 +63,7 @@
     <p>Recommended Courses</p>
 </div>
 <section class="grid row">
-    <div class="row o-offerings">
+    <div class="row o-offerings d-flex justify-content-center">
         {{#each recommendedCourses as |course|}}
             <section class="offering-card">
                 <div>
@@ -98,3 +99,5 @@
         {{/each}}
     </div>
 </section>
+    </li>
+</ul>
