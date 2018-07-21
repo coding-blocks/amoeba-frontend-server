@@ -6,6 +6,7 @@ const path = require('path')
 const deserializer = require('jsonapi-deserializer').deserialize;
 const { cookHTML, getAPIdata } = require('./utils')
 const courseRouter = require('./routes/courses')
+const sitemap = require('./routes/sitemap')
 
 const app = express()
 const config = require('./config.js')
@@ -38,6 +39,7 @@ app.get('/', async (req, res, next) => {
   })
 })
 
+app.use(sitemap)
 app.use('/courses', courseRouter)
 
 app.use(express.static('dist'))

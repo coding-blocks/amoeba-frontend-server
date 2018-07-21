@@ -18,6 +18,7 @@
     "ramda": "^0.25.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "showdown": "^1.8.6"
+    "showdown": "^1.8.6",
+    "sitemap": "^1.13.0"
   }
 }
