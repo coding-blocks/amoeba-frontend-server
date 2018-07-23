@@ -1,4 +1,4 @@
-let port = 8080;
+let port = 8080 || process.env.PORT;
 let base_link = 'https://api-online.cb.lk';
 module.exports = {
   PORT: port,
