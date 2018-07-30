@@ -1,0 +1,93 @@
+<header>
+    <nav class="main-nav">
+        <div class="nav-left">
+            <span class="logo-parent"></span>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-list">
+                <li class="nav-items pointer">
+                    <a href="/">Home</a>
+                </li>
+                <li class="nav-items pointer">
+                    <a href="/courses" class="active">All Courses</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<h1 class="home-heading">Coding Blocks Online</h1>
+<div class="grid-background">
+    <div class="heading">
+        <p>All Courses</p>
+    </div>
+    <div class="grid row">
+        {{#each courses as |course|}}
+            <div class="card-layout col-md-4 col-sm-6">
+                <div class="card o-layout-card o-course-card h-100">
+                    <div class="header">
+                        <h1 class="card-heading o-text-card">
+                            {{#if slug}}
+                                <a href="courses/{{slug}}">{{title}}</a>
+                            {{else}}
+                                <a href="courses/{{id}}">{{title}}</a>
+                            {{/if}}
+                        </h1>
+                        <h2 class="card-text">
+                            {{subtitle}}
+                        </h2>
+                        <p class="card-text card-body">
+                            {{summary}}
+                        </p>
+                    </div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="card-mentor col-12 col-sm-8 col-md-12">
+                            <div class="card-mentor-image">
+                                {{#each course.instructors as |instructor|}}
+                                    <img class="card-mentors" src="{{instructor.photo}}" alt="{{instructor.name}}">
+                                {{/each}}
+                            </div>
+                            <div class="card-mentor-text">
+                                <span>Instructors</span>
+                                <div class="card-mentor-name">
+                                    {{#each instructors as |instructor|}}
+                                        <h2>{{instructor.name}}</h2>
+                                        <div class="card-text card-body">
+                                            {{{mdToHtml instructor.description}}}
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{#each runs as |run|}}
+                    <div class="row no-gutters">
+                        <div class="col-md-6 col-sm-4 col-6 order-sm-2 order-md-0">
+                            <div class="card-price-details">
+                                <div class="card-batch-details">
+                                    Starting from
+                                    <br>
+                                    <span class="price">{{formatEpochDate run.start}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-parent col-md-6 col-sm-3 col-6 order-sm-3 order-md-1">
+                            <div class="button-solid">
+                                <a href="/courses/{{../slug}}">
+                                    <button>Rs. {{run.price}}</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-mentor-divider col-12 order-sm-0 order-md-2"></div>
+                        <div class="footer col-md-12 col-sm-5 col-12 order-sm-1 order-md-3">
+                            <div class="red">Hurry Up!</div>
+                            Enrollment starts {{formatEpochDate run.start}}<br>
+                            Enrollment ends {{formatEpochDate run.end}}
+                        </div>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
