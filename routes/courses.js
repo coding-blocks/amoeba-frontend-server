@@ -41,6 +41,9 @@ route.get('/:id', async (req, res, next) => {
       course: dataFetch.course,
       recommendedCourses: dataFetch.recommendedCourses,
       epoch: Math.round((new Date()).getTime() / 1000)
+    }, {
+      type: "course",
+      course: dataFetch.course
     })
 
     res.send(html)
