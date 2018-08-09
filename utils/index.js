@@ -2,10 +2,76 @@ const cheerio = require('cheerio')
 const fs = require('fs-extra')
 const path = require('path')
 const request = require('request-promise')
+const config = require('../config')
 
 const { getHtmlFromTemplate } = require('../services/templates')
 
-const cookHTML = async (templateFileName, data) => {
+const cookSEO = (seoData) => {
+  let data = {}
+  if (seoData.type === 'all-courses') {
+    data["@context"] = "http://schema.org"
+    data["@type"] = "ItemList"
+    data["itemListElement"] = []
+    for (let i = 0; i < seoData.courses.length; i++) {
+      let course = seoData.courses[i]
+      if (course.unlisted === true) continue
+      let obj = {
+        "@type": "ListItem",
+        "position": i+1,
+        "item": {
+          "@context": "http://schema.org",
+          "@type": "Course",
+          "name": course.title,
+          "description": course.subtitle,
+          "provider": {
+            "@type": "Organization",
+            "name": "Coding Blocks",
+            "sameAs": "https://online.codingblocks.com/"
+          },
+          "url":`${config.BASE_URL}/#${course.slug}`
+        }
+      }
+      data["itemListElement"].push(obj)
+    }
+
+  } else if (seoData.type === 'course') {
+    let course = seoData.course
+    if (course.unlisted === false) {
+      data = {
+        "@context": "http://schema.org/",
+        "@type": "Product",
+        "name": course.title,
+        "image": [
+          course.logo
+        ],
+        "description": course.subtitle,
+        "brand": {
+          "@type": "Thing",
+          "name": "Coding Blocks"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": course.rating,
+          "reviewCount": (parseInt(course.id) * 9) || 40
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": course.runs.reduce((acc, curr) =>
+                  ((acc.price < curr.price) ? acc : curr)).price,
+          "availability": "http://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "Coding Blocks"
+          }
+        }
+      }
+    }
+  }
+  return JSON.stringify(data)
+}
+
+const cookHTML = async (templateFileName, data, seoData) => {
   const index = await fs.readFile(path.join(__dirname, '../dist/index.html'), 'utf-8')
   const $ = cheerio.load(index)
   const renderedTemplate = getHtmlFromTemplate(templateFileName, data)
@@ -14,6 +80,14 @@ const cookHTML = async (templateFileName, data) => {
       ${renderedTemplate}
     </noscript>
   `)
+  if (seoData !== undefined) {
+    $('body').append(`
+    <script type="application/ld+json">
+        ${cookSEO(seoData)}
+    </script>
+    `)
+  }
+
   return $.html()
 }
 
