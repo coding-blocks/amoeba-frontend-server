@@ -28,7 +28,7 @@ const cookSEO = (seoData) => {
             "name": "Coding Blocks",
             "sameAs": "https://online.codingblocks.com/"
           },
-          "url":`${config.COURSES_URL}#${course.slug}`
+          "url":`${config.BASE_URL}/#${course.slug}`
         }
       }
       data["itemListElement"].push(obj)
