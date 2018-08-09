@@ -30,8 +30,10 @@ app.get('/', async (req, res, next) => {
       courses: dataFetch.courses,
       announcements: dataFetch.announcements,
       epoch: Math.round((new Date()).getTime() / 1000)
+    }, {
+      type: "all-courses",
+      courses: dataFetch.courses
     })
-
     res.send(html)
   }).catch((e) => {
     console.error(e);
