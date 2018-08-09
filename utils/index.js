@@ -26,7 +26,7 @@ const cookSEO = (seoData) => {
           "provider": {
             "@type": "Organization",
             "name": "Coding Blocks",
-            "sameAs": "https://codingblocks.com/classroom-courses/"
+            "sameAs": "https://online.codingblocks.com/"
           },
           "url":`${config.COURSES_URL}#${course.slug}`
         }
@@ -68,7 +68,7 @@ const cookSEO = (seoData) => {
       }
     }
   }
-  return JSON.stringify(data, null, 4)
+  return JSON.stringify(data)
 }
 
 const cookHTML = async (templateFileName, data, seoData) => {
@@ -81,7 +81,6 @@ const cookHTML = async (templateFileName, data, seoData) => {
     </noscript>
   `)
   if (seoData !== undefined) {
-    console.log(cookSEO(seoData))
     $('body').append(`
     <script type="application/ld+json">
         ${cookSEO(seoData)}
