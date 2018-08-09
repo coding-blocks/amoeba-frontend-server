@@ -1,35 +1,65 @@
-<div class="home-vh">
-    <ul class="nav-list">
-        <li class="nav-items pointer">
-            <a href="/">Home</a>
-        </li>
-        <li class="nav-items pointer">
-            <a href="/courses">All Courses</a>
-        </li>
-    </ul>
-    <div class="home-container">
-        <h1 class="home-heading">Coding Blocks Online</h1>
-        <h2>Learn to code interactively</h2>
-    </div>
-</div>
-<ul>
-    <li>
-{{#with course}}
-    <h1>{{title}}</h1>
-    <h2>{{subtitle}}</h2>
-    <h2>{{summary}}</h2>
+<header>
+    <nav class="main-nav">
+        <div class="nav-left">
+            <span class="logo-parent"></span>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-list">
+                <li class="nav-items pointer">
+                    <a href="/">Home</a>
+                </li>
+                <li class="nav-items pointer">
+                    <a href="/courses">All Courses</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<h1 class="home-heading">Coding Blocks Online</h1>
 
-    <div>
-        <ul>
-        {{#each runs as |run|}}
+<div class="grid-background">
+  <div class="grid row">
+    <div class="classroom-container row">
+      <div class="classroom-header-box col-md-12 col-sm-12 col-xs-12">
+        <div class="classroom-header row">
+          <div class="classroom-image col-md-2 col-xs-2 col-sm-2">
+            <img src="{{course.logo}}" alt="course logo">
+          </div>
+          <h1 class="classroom-text col-md-10 col-xs-10 col-sm-10">
+            {{course.title}}
+          </h1>
+        </div>
+        <h2 class="classroom-para">
+          {{course.subtitle}}
+        </h2>
+        <br>
+        <div class="para">
+          <span class="key">Mentor : </span>
+            {{#each course.instructors as |instructor|}}
+               {{instructor.name}}
+            {{/each}}
+        </div>
+        <br><br>
+        <div class="heading-u">
+          Summary
+        </div>
+        <div class="para summary">
+          {{course.summary}}
+        </div>
+        <br><br>
+        
+        <div class="heading-u">
+          What will you learn
+        </div>
+        {{#with course}}
+          {{#each runs as |run|}}
             {{#ifCond ../../epoch '<' run.start}}
-                <li>
-                    <h3>{{run.name}}</h3>
+                    <h3> Batch Number - {{run.name}}</h3>
                     <div>{{run.description}}</div>
-                    <div>Batch Start: {{formatEpochDate run.start}}</div>
-                    <div>Batch End: {{formatEpochDate run.end}}</div>
-                    <div>Enrollment Start: {{formatEpochDate run.enrollment-start}}</div>
-                    <div>Enrollment End: {{formatEpochDate run.enrollment-end}}</div>
+                    <div>Batch Starts: {{formatEpochDate run.start}}</div>
+                    <div>Batch Ends: {{formatEpochDate run.end}}</div>
+                    <div>Enrollment Starts: {{formatEpochDate run.enrollment-start}}</div>
+                    <div>Enrollment Ends: {{formatEpochDate run.enrollment-end}}</div>
                     <div>Price: Rs {{run.price}}</div>
                     <ul>
                     {{#each run.sections as |section|}}
@@ -45,59 +75,93 @@
                         </li>
                     {{/each}}
                     </ul>
-                </li>
             {{/ifCond}}
         {{/each}}
-        </ul>
-    </div>
-    <strong>Instructors</strong>
-    <div>
-        {{#each instructors as |instructor|}}
-            <h3>{{instructor.name}}</h3>
-            <p>{{instructor.description}}</p>
-        {{/each}}
-    </div>
-{{/with}}
-
-<div class="heading">
-    <p>Recommended Courses</p>
-</div>
-<section class="grid row">
-    <div class="row o-offerings d-flex justify-content-center">
-        {{#each recommendedCourses as |course|}}
-            <section class="offering-card">
-                <div>
-                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
-                        <div class="left order-2 order-md-1">
-                            <h1>
-                                {{title}}
-                            </h1>
-                            <h2>
-                                {{subtitle}}
-                            </h2>
-                            {{#if slug}}
-                                <a href="{{slug}}">Link</a>
-                            {{else}}
-                                <a href="{{id}}">Link</a>
-                            {{/if}}
-                            <p class="card-text card-body">
-                                {{summary}}
-                            </p>
-                            <h3 class="card-text card-body">Instructors :</h3>
-                            {{#each instructors as |instructor|}}
-                                <h2>{{instructor.name}}</h2>
-                                <p class="card-text card-body">
-                                    {{instructor.description}}
-                                </p>
-                            {{/each}}
-                            <br>
-                        </div>
-
-                    </div>
+      {{/with}}
+      <br><br>
+      <div class="heading-u">
+        About Instructors
+      </div>
+      <div class="row no-gutters">
+        {{#each course.instructors as |instructor|}}
+          <div class="col-md-6 col-sm-12">
+            <div class="img-desc row no-gutters">
+              <div class="col-3">
+                <div class="img-container">
+                  <div class="round-img">
+                    <img src="{{instructor.photo}}" alt="photo of {{instructor.name}}">
+                  </div>
                 </div>
-            </section>
+              </div>
+              <div class="description col-8">
+                <div class="heading-d">
+                  <div class="main-h">
+                    {{instructor.name}}
+                  </div>
+                  <div class="sub-h">
+                    Mentor, Coding Blocks
+                  </div>
+                </div>
+                <div class="classroom-para">
+                  {{instructor.description}}
+                </div>
+              </div>
+            </div>
+          </div>
         {{/each}}
+      </div>
     </div>
-</section>
-    </li>
-</ul>
+  </div>
+ </div>
+</div>
+
+<div class="grid-background">
+  <div class="red heading">
+      <p>Recommended Courses</p>
+  </div>
+  <div class="grid row">
+      {{#each recommendedCourses as |course|}}
+          <div class="card-layout col-md-4 col-sm-6">
+              <div class="card o-layout-card o-course-card h-100">
+                  <div class="header">
+                      <h1 class="card-heading o-text-card">
+                          {{#if slug}}
+                              <a href="courses/{{slug}}">{{title}}</a>
+                          {{else}}
+                              <a href="courses/{{id}}">{{title}}</a>
+                          {{/if}}
+                      </h1>
+                      <h2 class="card-text">
+                          {{subtitle}}
+                      </h2>
+                      <p class="card-text card-body">
+                          {{summary}}
+                      </p>
+                  </div>
+                  <div class="row no-gutters align-items-center">
+                      <div class="card-mentor col-12 col-sm-8 col-md-12">
+                          <div class="card-mentor-image">
+                            {{#each course.instructors as |instructor index|}}
+                              {{#ifCond index '<' 2}}
+                                <img class="card-mentors" src="{{instructor.photo}}">
+                              {{/ifCond}}
+                            {{/each}}
+                          </div>
+                          <div class="card-mentor-text">
+                              <span>Instructors</span>
+                              <div class="card-mentor-name">
+                                  {{#each instructors as |instructor|}}
+                                      <h2>{{instructor.name}}</h2>
+                                      <div class="card-text card-body">
+                                          {{{mdToHtml instructor.description}}}
+                                      </div>
+                                  {{/each}}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      {{/each}}
+  </div>
+</div>

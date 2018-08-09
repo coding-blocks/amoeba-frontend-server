@@ -17,7 +17,7 @@
 </header>
 <h1 class="home-heading">Coding Blocks Online</h1>
 <div class="grid-background">
-    <div class="heading">
+    <div class="red heading">
         <p>All Courses</p>
     </div>
     <div class="grid row">
@@ -42,9 +42,11 @@
                     <div class="row no-gutters align-items-center">
                         <div class="card-mentor col-12 col-sm-8 col-md-12">
                             <div class="card-mentor-image">
-                                {{#each course.instructors as |instructor|}}
-                                    <img class="card-mentors" src="{{instructor.photo}}" alt="{{instructor.name}}">
-                                {{/each}}
+                              {{#each course.instructors as |instructor index|}}
+                                {{#ifCond index '<' 2}}
+                                  <img class="card-mentors" src="{{instructor.photo}}">
+                                {{/ifCond}}
+                              {{/each}}
                             </div>
                             <div class="card-mentor-text">
                                 <span>Instructors</span>
@@ -57,35 +59,42 @@
                                     {{/each}}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                {{#each runs as |run|}}
-                    <div class="row no-gutters">
-                        <div class="col-md-6 col-sm-4 col-6 order-sm-2 order-md-0">
-                            <div class="card-price-details">
-                                <div class="card-batch-details">
-                                    Starting from
-                                    <br>
-                                    <span class="price">{{formatEpochDate run.start}}
-                                    </span>
-                                </div>
+                            <div class="card-mentor-name">
+                              <p>Available Batches:</p>
                             </div>
                         </div>
-                        <div class="button-parent col-md-6 col-sm-3 col-6 order-sm-3 order-md-1">
-                            <div class="button-solid">
-                                <a href="/courses/{{../slug}}">
-                                    <button>Rs. {{run.price}}</button>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-mentor-divider col-12 order-sm-0 order-md-2"></div>
-                        <div class="footer col-md-12 col-sm-5 col-12 order-sm-1 order-md-3">
-                            <div class="red">Hurry Up!</div>
-                            Enrollment starts {{formatEpochDate run.start}}<br>
-                            Enrollment ends {{formatEpochDate run.end}}
-                        </div>
                     </div>
-                {{/each}}
+                 {{#if course.runs.length}}
+                  {{#each runs as |run|}}
+                      <div class="row no-gutters">
+                          <div class="col-md-6 col-sm-4 col-6 order-sm-2 order-md-0">
+                              <div class="card-price-details">
+                                  <div class="card-batch-details">
+                                      Starting from
+                                      <br>
+                                      <span class="price">{{formatEpochDate run.start}}
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="button-parent col-md-6 col-sm-3 col-6 order-sm-3 order-md-1">
+                              <div class="button-solid">
+                                  <a href="/courses/{{../slug}}">
+                                      <button>Rs. {{run.price}}</button>
+                                  </a>
+                              </div>
+                          </div>
+                          <div class="footer col-md-12 col-sm-5 col-12 order-sm-1 order-md-3">
+                              <div class="red">Hurry Up!</div>
+                              Enrollment starts {{formatEpochDate run.start}}<br>
+                              Enrollment ends {{formatEpochDate run.end}}
+                          </div>
+                      </div>
+                      <div class="card-mentor-divider col-12 order-sm-0 order-md-2"></div>
+                  {{/each}}
+                  {{else}}
+                    No available runs right now ! Please check back later or drop a line at admissions.codingblocks.com.
+                 {{/if}}
                 </div>
             </div>
         {{/each}}

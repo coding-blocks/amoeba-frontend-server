@@ -1,88 +1,97 @@
-<ul class="nav-list">
-    <li class="nav-items pointer">
-        <a href="/" class="active">Home</a>
-    </li>
-    <li class="nav-items pointer">
-        <a href="/courses">All Courses</a>
-    </li>
-</ul>
+<header>
+    <nav class="main-nav">
+        <div class="nav-left">
+            <span class="logo-parent"></span>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-list">
+                <li class="nav-items pointer">
+                    <a href="/" class="active">Home</a>
+                </li>
+                <li class="nav-items pointer">
+                    <a href="/courses">All Courses</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<h1 class="home-heading">Coding Blocks Online</h1>
 
-<div class="home-vh">
-    <div class="home-container">
-        <h1 class="home-heading">Coding Blocks Online</h1>
-        <h2>Learn to code interactively</h2>
-    </div>
+<div class="grid-background">
+  <div class="red heading">
+      <p>Learn To Code interactively</p>
+  </div>
+  <div class="grid row">
+      <div class="row o-offerings d-flex justify-content-center">
+          {{#each announcements}}
+              <section class="offering-card">
+                  <div>
+                      <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
+                          <div class="left order-2 order-md-1">
+                              <h1>
+                                  {{attributes.title}}
+                              </h1>
+                              <h2>
+                                  {{attributes.subtitle}}
+                              </h2>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          {{/each}}
+      </div>
+  </div>
 </div>
 
-<div class="grid row">
-    <div class="row o-offerings d-flex justify-content-center">
-        {{#each announcements}}
-            <section class="offering-card">
-                <div>
-                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
-                        <div class="left order-2 order-md-1">
-                            <h1>
-                                {{attributes.title}}
-                            </h1>
-                            <h2>
-                                {{attributes.subtitle}}
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        {{/each}}
-    </div>
-</div>
-
-<div class="heading">
-    <p>All Courses</p>
-</div>
-<div class="grid row">
-    <div class="row o-offerings d-flex justify-content-center">
-        {{#each courses as |course|}}
-            <section class="offering-card">
-                <div>
-                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-between">
-                        <div class="left order-2 order-md-1">
-                            <h1>
-                                {{title}}
-                            </h1>
-                            <h2>
-                                {{subtitle}}
-                            </h2>
-                            {{#if slug}}
-                                <a href="courses/{{slug}}">Link</a>
-                            {{else}}
-                                <a href="courses/{{id}}">Link</a>
-                            {{/if}}
-                            <p class="card-text card-body">
-                                {{summary}}
-                            </p>
-                            <h3 class="card-text card-body">Instructors :</h3>
-                            {{#each instructors as |instructor|}}
-                                <h2>{{instructor.name}}</h2>
-                                <p class="card-text card-body">
-                                    {{{mdToHtml instructor.description}}}
-                                </p>
+<div class="grid-background">
+  <div class="red heading">
+      <p>All Courses</p>
+  </div>
+  <div class="grid row">
+      {{#each courses as |course|}}
+          <div class="card-layout col-md-4 col-sm-6">
+              <div class="card o-layout-card o-course-card h-100">
+                  <div class="header">
+                      <h1 class="card-heading o-text-card">
+                          {{#if slug}}
+                              <a href="courses/{{slug}}">{{title}}</a>
+                          {{else}}
+                              <a href="courses/{{id}}">{{title}}</a>
+                          {{/if}}
+                      </h1>
+                      <h2 class="card-text">
+                          {{subtitle}}
+                      </h2>
+                      <p class="card-text card-body">
+                          {{summary}}
+                      </p>
+                  </div>
+                  <div class="row no-gutters align-items-center">
+                      <div class="card-mentor col-12 col-sm-8 col-md-12">
+                          <div class="card-mentor-image">
+                            {{#each course.instructors as |instructor index|}}
+                              {{#ifCond index '<' 2}}
+                                <img class="card-mentors" src="{{instructor.photo}}">
+                              {{/ifCond}}
                             {{/each}}
-                            {{#each runs as |run|}}
-                                {{#ifCond start '>' ../../epoch}}
-                                    <div>Name: {{run.name}}</div>
-                                    <div>Batch Start: {{formatEpochDate run.start}}</div>
-                                    <div>Batch End: {{formatEpochDate run.end}}</div>
-                                    <div>Price: Rs {{run.price}}</div>
-                                    <br>
-                                {{/ifCond}}
-                            {{/each}}
-                            <br>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-        {{/each}}
-    </div>
+                          </div>
+                          <div class="card-mentor-text">
+                              <span>Instructors</span>
+                              <div class="card-mentor-name">
+                                  {{#each instructors as |instructor|}}
+                                      <h2>{{instructor.name}}</h2>
+                                      <div class="card-text card-body">
+                                          {{{mdToHtml instructor.description}}}
+                                      </div>
+                                  {{/each}}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      {{/each}}
+  </div>
 </div>
 
 
