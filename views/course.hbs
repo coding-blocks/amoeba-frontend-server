@@ -60,7 +60,7 @@
                     <div>Batch Ends: {{formatEpochDate run.end}}</div>
                     <div>Enrollment Starts: {{formatEpochDate run.enrollment-start}}</div>
                     <div>Enrollment Ends: {{formatEpochDate run.enrollment-end}}</div>
-                    <div>Price: Rs {{run.price}}</div>
+                    <div>Price: ₹ {{run.price}}</div>
                     <ul>
                     {{#each run.sections as |section|}}
                         <li>
@@ -142,7 +142,7 @@
                       <div class="card-mentor col-12 col-sm-8 col-md-12">
                           <div class="card-mentor-image">
                             {{#each course.instructors as |instructor index|}}
-                              {{#ifCond index '<' 2}}
+                              {{#ifCond index '<' 3}}
                                 <img class="card-mentors" src="{{instructor.photo}}">
                               {{/ifCond}}
                             {{/each}}

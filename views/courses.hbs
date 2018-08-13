@@ -43,7 +43,7 @@
                         <div class="card-mentor col-12 col-sm-8 col-md-12">
                             <div class="card-mentor-image">
                               {{#each course.instructors as |instructor index|}}
-                                {{#ifCond index '<' 2}}
+                                {{#ifCond index '<' 3}}
                                   <img class="card-mentors" src="{{instructor.photo}}">
                                 {{/ifCond}}
                               {{/each}}
@@ -80,7 +80,7 @@
                           <div class="button-parent col-md-6 col-sm-3 col-6 order-sm-3 order-md-1">
                               <div class="button-solid">
                                   <a href="/courses/{{../slug}}">
-                                      <button>Rs. {{run.price}}</button>
+                                      <button>₹ {{run.price}}</button>
                                   </a>
                               </div>
                           </div>
