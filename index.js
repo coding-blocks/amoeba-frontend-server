@@ -33,6 +33,10 @@ app.get('/', async (req, res, next) => {
     }, {
       type: "all-courses",
       courses: dataFetch.courses
+    },
+    {
+      description: 'Coding Blocks is the best online programming and software training Institute offer online certification courses in Jave, C++, Android, NodeJs, Data structure, Machine learning, Interview preparation and more.',
+      title: 'Best online computer programming and coding courses in India.'
     })
     res.send(html)
   }).catch((e) => {
