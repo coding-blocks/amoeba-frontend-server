@@ -19,6 +19,10 @@ route.get('/', async (req, res, next) => {
     baseUrlApi: config.API.BASE_URL,
     courses: dataFetch.courses,
     epoch: Math.round((new Date()).getTime() / 1000)
+  }, undefined,
+  {
+    description: 'Coding Blocks is the best online programming and software training Institute offer online certification courses in Jave, C++, Android, NodeJs, Data structure, Machine learning, Interview preparation and more.',
+    title: 'Best online computer programming and coding courses in India.'
   })
   res.send(html)
 })

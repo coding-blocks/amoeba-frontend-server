@@ -71,7 +71,7 @@ const cookSEO = (seoData) => {
   return JSON.stringify(data)
 }
 
-const cookHTML = async (templateFileName, data, seoData) => {
+const cookHTML = async (templateFileName, data, seoData, metaData) => {
   const index = await fs.readFile(path.join(__dirname, '../dist/index.html'), 'utf-8')
   const $ = cheerio.load(index)
   const renderedTemplate = getHtmlFromTemplate(templateFileName, data)
@@ -86,6 +86,12 @@ const cookHTML = async (templateFileName, data, seoData) => {
         ${cookSEO(seoData)}
     </script>
     `)
+  }
+  if (metaData !== undefined) {
+    $('head').append(`
+      <meta type='description' content=${JSON.stringify(metaData.description)}/>
+      <meta type='title' content=${JSON.stringify(metaData.title)}/>
+      `)
   }
 
   return $.html()
