@@ -48,6 +48,9 @@ route.get('/:id', async (req, res, next) => {
     }, {
       type: "course",
       course: dataFetch.course
+    }, {
+      description: dataFetch.course.summary,
+      title: dataFetch.course.subtitle
     })
 
     res.send(html)
