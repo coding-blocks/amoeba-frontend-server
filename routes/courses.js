@@ -50,7 +50,8 @@ route.get('/:id', async (req, res, next) => {
       course: dataFetch.course
     }, {
       description: dataFetch.course.summary,
-      title: dataFetch.course.subtitle
+      title: dataFetch.course.subtitle,
+      image: dataFetch.course.logo
     })
 
     res.send(html)

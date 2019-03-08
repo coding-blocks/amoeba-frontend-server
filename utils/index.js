@@ -91,6 +91,9 @@ const cookHTML = async (templateFileName, data, seoData, metaData) => {
     $('head').append(`
       <meta type='description' content=${JSON.stringify(metaData.description)}/>
       <meta type='title' content=${JSON.stringify(metaData.title)}/>
+      <meta property="og:title" content=${JSON.stringify(metaData.title)}/>
+      <meta property="og:description" content=${JSON.stringify(metaData.description)}/>
+      <meta property="og:image" content=${JSON.stringify(metaData.image)} />
       `)
   }
 
