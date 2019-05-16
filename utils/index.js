@@ -97,6 +97,7 @@ const cookHTML = async (templateFileName, data, seoData, metaData) => {
       <meta property="og:description" content=${JSON.stringify(metaData.description)}/>
       <meta property="og:image" content=${JSON.stringify(metaData.image)} />
       <meta property="og:site_name" content="Coding Blocks India">
+      <meta property="og:url" content="https://online.codingblocks.com/" />
       `)
   }
 
