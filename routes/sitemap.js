@@ -7,7 +7,7 @@ const { API } = require('../config')
 
 Router.get('/sitemap.xml', async (req, res) => {
   const courses = JSON.parse(await rp(API.COURSE_LIST))
-  const coursesUrls = courses.map(course => {
+  const coursesUrls  = courses.map(course => {
     const options = {
       changefreq: 'weekly',
       priority: 0.8
