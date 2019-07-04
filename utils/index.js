@@ -88,6 +88,10 @@ const cookHTML = async (templateFileName, data, seoData, metaData) => {
     `)
   }
   if (metaData !== undefined) {
+    // remove existing meta tag
+
+    $('meta[name=description]').remove()
+
     $('head').append(`
       <meta type='description' content=${JSON.stringify(metaData.description)}/>
       <meta type='title' content=${JSON.stringify(metaData.title)}/>
