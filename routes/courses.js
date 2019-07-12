@@ -35,10 +35,12 @@ route.get('/:id', async (req, res, next) => {
 
   let getCourse = getAPIdata(config.API.COURSE_URL + id)
   let getRecommendedCourses = getAPIdata(config.API.RECOMMENDED_COURSE)
+  let getRatings = getAPIdata(config.API.COURSE_RATINGS + id + '?page%5Boffset%5D=0&page%5Blimit%5D=10')
 
-  Promise.all([getCourse, getRecommendedCourses]).then(async (values) => {
+  Promise.all([getCourse, getRecommendedCourses, getRatings]).then(async (values) => {
     dataFetch.course = deserializer(values[0])
     dataFetch.recommendedCourses = deserializer(values[1])
+    dataFetch.ratings = deserializer(values[2])
 
     const html = await cookHTML('course', {
       baseUrlApi: config.API.BASE_URL,
@@ -47,7 +49,8 @@ route.get('/:id', async (req, res, next) => {
       epoch: Math.round((new Date()).getTime() / 1000)
     }, {
       type: "course",
-      course: dataFetch.course
+      course: dataFetch.course,
+      ratings: dataFetch.ratings
     }, {
       description: dataFetch.course.seoMeta,
       title: dataFetch.course.subtitle,

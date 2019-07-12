@@ -11,6 +11,7 @@ module.exports = {
     COURSE_URL_WITH_INST_RUNS: `${base_link_api}/api/v2/courses?exclude=ratings%2Cinstructors.*&filter%5Bunlisted%5D=false&include=instructors%2Cruns&page%5Blimit%5D=8&page%5Boffset%5D=0`,
     RECOMMENDED_COURSE: `${base_link_api}/api/v2/courses?exclude=ratings%2Cinstructors.*%2Cfeedbacks%2Cruns.*&filter%5Brecommended%5D=true&filter%5Bunlisted%5D=false&include=instructors%2Cruns&page%5Blimit%5D=12&sort=difficulty`,
     ANNOUNCEMENTS: `${base_link_api}/api/v2/carousel_cards?sort=order`,
-    COURSE_LIST: `${base_link_api}/api/v2/courses/list`
+    COURSE_LIST: `${base_link_api}/api/v2/courses/list`,
+    COURSE_RATINGS: `https://online-api.codingblocks.com/api/v2/ratings/course/`
   }
 }
