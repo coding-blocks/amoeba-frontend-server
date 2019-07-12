@@ -44,6 +44,7 @@ const cookSEO = (seoData) => {
         "@context": "http://schema.org/",
         "@type": "Product",
         "name": course.title,
+        "sku": course.id,
         "image": [
           course.logo
         ],
@@ -56,10 +57,11 @@ const cookSEO = (seoData) => {
           },
           "author": {
             "@type": "Person",
-            "name": ratings.length > 0 ? ratings[0].user.firstname + ' ' + ratings[0].user.lastname : 'Abhishek Gupta'
+            "name": ratings.length > 0 ? ratings[0].user.firstname + ' '
+             + ratings[0].user.lastname : 'Abhishek Gupta'
           }
         },
-        "url": `${config.BASE_URL}/#${course.slug}`,
+        "url": `${config.BASE_URL}/${course.slug}`,
         "description": course.subtitle,
         "brand": {
           "@type": "Thing",
@@ -73,14 +75,17 @@ const cookSEO = (seoData) => {
         "offers": {
           "@type": "Offer",
           "priceCurrency": "INR",
-          "priceValidUntil": moment.unix(Number(course["active-runs"][0]['enrollment-end'])).format('YYYY-MM-DD'),
+          "priceValidUntil": course["active-runs"].length > 0 ?
+            moment.unix(Number(course["active-runs"][0]['enrollment-end'])).format('YYYY-MM-DD')
+            : moment.unix(Date.now()/1000).format('YYYY-MM-DD'),
           "price": course.runs.reduce((acc, curr) =>
                   ((acc.price < curr.price) ? acc : curr)).price,
           "availability": "http://schema.org/InStock",
           "seller": {
             "@type": "Organization",
             "name": "Coding Blocks"
-          }
+          },
+          "url": `${config.BASE_URL}/${course.slug}`
         }
       }
     }
