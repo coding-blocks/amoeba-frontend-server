@@ -49,7 +49,7 @@ route.get('/:id', async (req, res, next) => {
       type: "course",
       course: dataFetch.course
     }, {
-      description: dataFetch.course.summary,
+      description: dataFetch.course.seoMeta,
       title: dataFetch.course.subtitle,
       image: dataFetch.course.logo
     })
