@@ -18,8 +18,8 @@ app.use(morgan('dev'))
 app.get('/', async (req, res, next) => {
 
   let dataFetch = {}
-  let getCourses = getAPIdata(config.API.RECOMMENDED_COURSE);
-  let getAnnouncements = getAPIdata(config.API.ANNOUNCEMENTS);
+  let getCourses = getAPIdata(config.API.RECOMMENDED_COURSE + '?exclude=ratings%2Cinstructors.*%2Cfeedbacks%2Cruns.*&filter%5Brecommended%5D=true&filter%5Bunlisted%5D=false&include=instructors%2Cruns&page%5Blimit%5D=12&sort=difficulty');
+  let getAnnouncements = getAPIdata(config.API.ANNOUNCEMENTS + '?sort=order');
 
   Promise.all([getCourses, getAnnouncements]).then(async (values) => {
     dataFetch.courses = deserializer(values[0])
