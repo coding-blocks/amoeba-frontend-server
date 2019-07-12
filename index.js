@@ -1,12 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
-const cheerio = require('cheerio')
-const fs = require('fs-extra')
-const path = require('path')
-const deserializer = require('jsonapi-deserializer').deserialize;
 const { cookHTML, getAPIdata } = require('./utils')
-const courseRouter = require('./routes/courses')
 const sitemap = require('./routes/sitemap')
+
+require('./prerender')
 
 const app = express()
 const config = require('./config.js')
@@ -15,38 +12,18 @@ const port = config.PORT || '8080'
 
 app.use(morgan('dev'))
 
-app.get('/', async (req, res, next) => {
+const prerenderMiddleware = require('prerender-node').set('prerenderServiceUrl', 'http://localhost:' + config.PRERENDER.PORT);
 
-  let dataFetch = {}
-  let getCourses = getAPIdata(config.API.RECOMMENDED_COURSE);
-  let getAnnouncements = getAPIdata(config.API.ANNOUNCEMENTS);
-
-  Promise.all([getCourses, getAnnouncements]).then(async (values) => {
-    dataFetch.courses = deserializer(values[0])
-    dataFetch.announcements = values[1].data;
-
-    const html = await cookHTML('index', {
-      baseUrlApi: config.API.BASE_URL,
-      courses: dataFetch.courses,
-      announcements: dataFetch.announcements,
-      epoch: Math.round((new Date()).getTime() / 1000)
-    }, {
-      type: "all-courses",
-      courses: dataFetch.courses
-    },
-    {
-      description: 'Coding Blocks is the best online programming and software training Institute offer online certification courses in Jave, C++, Android, NodeJs, Data structure, Machine learning, Interview preparation and more.',
-      title: 'Best online computer programming and coding courses in India.'
-    })
-    res.send(html)
-  }).catch((e) => {
-    console.error(e);
-    next();
-  })
-})
+// app.get('/', prerenderMiddleware)
 
 app.use(sitemap)
-app.use('/courses', courseRouter)
+app.use((req, res, next) => {
+const prerender = [/\/courses\/.*/, /\/jobs\/.*/].some(r => r.test(req.path))
+  if (prerender)
+    prerenderMiddleware(req, res, next)
+  else
+    next()
+})
 
 app.use(express.static('dist'))
 

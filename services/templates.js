@@ -1,9 +1,7 @@
 const Handlebars = require("handlebars");
 const path = require('path')
 const fs = require('fs-extra')
-const { registerHelpers } = require('../utils/helpers');
 
-registerHelpers(Handlebars)
 
 // precompile templates
 
