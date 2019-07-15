@@ -6,7 +6,7 @@ module.exports = {
   BASE_URL: base_url,
   COURSES_URL: `${base_url}/courses/`,
   PRERENDER: {
-    PORT: 3001,
+    PORT: 3010,
     TIMEOUT: 60 * 1000
   },
   API: {
