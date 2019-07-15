@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const request = require('request-promise')
 const config = require('../config')
+const moment = require('moment')
 
 const { getHtmlFromTemplate } = require('../services/templates')
 
@@ -36,14 +37,31 @@ const cookSEO = (seoData) => {
 
   } else if (seoData.type === 'course') {
     let course = seoData.course
+    let ratings = seoData.ratings
+    
     if (course.unlisted === false) {
       data = {
         "@context": "http://schema.org/",
         "@type": "Product",
         "name": course.title,
+        "sku": course.id,
         "image": [
           course.logo
         ],
+        "review": {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": ratings.length > 0 ? ratings[0].value : 5 ,
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": ratings.length > 0 ? ratings[0].user.firstname + ' '
+             + ratings[0].user.lastname : 'Abhishek Gupta'
+          }
+        },
+        "url": `${config.BASE_URL}/${course.slug}`,
         "description": course.subtitle,
         "brand": {
           "@type": "Thing",
@@ -57,13 +75,17 @@ const cookSEO = (seoData) => {
         "offers": {
           "@type": "Offer",
           "priceCurrency": "INR",
+          "priceValidUntil": course["active-runs"].length > 0 ?
+            moment.unix(Number(course["active-runs"][0]['enrollment-end'])).format('YYYY-MM-DD')
+            : moment.unix(Date.now()/1000).format('YYYY-MM-DD'),
           "price": course.runs.reduce((acc, curr) =>
                   ((acc.price < curr.price) ? acc : curr)).price,
           "availability": "http://schema.org/InStock",
           "seller": {
             "@type": "Organization",
             "name": "Coding Blocks"
-          }
+          },
+          "url": `${config.BASE_URL}/${course.slug}`
         }
       }
     }
