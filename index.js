@@ -17,20 +17,21 @@ const prerenderMiddleware = require('prerender-node').set('prerenderServiceUrl',
 // app.get('/', prerenderMiddleware)
 
 app.use(sitemap)
-app.use((req, res, next) => {
-const prerender = [/\/courses\/.*/, /\/jobs\/.*/].some(r => r.test(req.path))
-  if (prerender)
-    prerenderMiddleware(req, res, next)
-  else
-    next()
-})
+// app.use((req, res, next) => {
+// const prerender = [/\/courses\/.*/, /\/jobs\/.*/].some(r => r.test(req.path))
+//   if (prerender)
+//     prerenderMiddleware(req, res, next)
+//   else
+//     next()
+// })
+
+app.use(prerenderMiddleware)
 
 app.use(express.static('dist'))
 
 
 app.get('*', async (req, res) => {
-  const html = await cookHTML('forward', {})
-  res.send(html)
+  res.sendFile(__dirname + '/dist/index.html')
 })
 
 
