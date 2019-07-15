@@ -8,10 +8,7 @@ server.init({
   pageLoadTimeout: config.TIMEOUT
 })
 
-process.env.CACHE_ROOT_DIR = __dirname + '/cache'
-process.env.CACHE_LIVE_TIME = 5 * 60 * 60 // 5 hrs
-
-server.use(require('prerender-file-cache'));
+server.use(require('prerender-memory-cache'));
 
 server.start()
 
