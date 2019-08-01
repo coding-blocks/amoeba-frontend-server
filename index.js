@@ -12,7 +12,9 @@ const port = config.PORT || '8080'
 
 app.use(morgan('dev'))
 
-const prerenderMiddleware = require('prerender-node').set('prerenderServiceUrl', 'http://localhost:' + config.PRERENDER.PORT);
+const prerenderMiddleware = require('prerender-node')
+prerenderMiddleware.set('prerenderServiceUrl', 'http://localhost:' + config.PRERENDER.PORT);
+prerenderMiddleware.set('crawlerUserAgents', [...prerenderMiddleware.crawlerUserAgents, 'structured'])
 
 // app.get('/', prerenderMiddleware)
 
